@@ -11,7 +11,7 @@ jobs:
     with:
       project: 'roboshop'     
       component: 'catalogue'
-
+   
  main-workflow: 
   runs-on: ubuntu-latest
   steps:
