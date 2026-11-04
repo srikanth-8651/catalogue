@@ -3,7 +3,7 @@ FROM node:20.20.2-alpine3.23 AS builder
 WORKDIR /app
 COPY *.js .
 COPY package.json .
-RUN npm install
+RUN npm install   
 
 
 FROM node:20.20.2-alpine3.23
