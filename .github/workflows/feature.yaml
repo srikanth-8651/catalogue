@@ -9,9 +9,14 @@ jobs:
     if: github.ref_name != 'main'
     uses: srikanth-8651/workflows/.github/workflows/nodejs-eks-feature.yaml@main
     with:
-      project: 'roboshop'   
+      project: 'roboshop'     
       component: 'catalogue'
-
+    permissions:
+     statuses: write
+     contents: write
+     pull-requests: write
+    secrets: inherit
+   
  main-workflow: 
   runs-on: ubuntu-latest
   steps:
