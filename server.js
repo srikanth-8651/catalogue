@@ -5,7 +5,7 @@ instana({
     tracing: {
         enabled: true      
     }
-});   
+});     
 // some change
 // some changes, few more changes
 const { MongoClient, ObjectId } = require('mongodb');
