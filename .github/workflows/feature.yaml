@@ -21,7 +21,7 @@ jobs:
     if: github.ref_name == 'main'
     uses: srikanth-8651/workflows/.github/workflows/nodejs-eks-main.yaml@main  #calls the reusable workflow.
     with: #passing inputs 
-      project: 'roboshop'
+      project: 'roboshop' 
       component: 'catalogue'  
       environment: 'dev'
       secrets: inherit
