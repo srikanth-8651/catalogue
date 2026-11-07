@@ -22,7 +22,7 @@ jobs:
     uses: srikanth-8651/workflows/.github/workflows/nodejs-eks-main.yaml@main
     with:
     project: 'roboshop'
-    component: 'catalogue'
+    component: 'catalogue'  
     environment: 'dev'
     secrets: inherit
    
