@@ -3,7 +3,7 @@
 // MUST be done before loading anything else!
 instana({
     tracing: {
-        enabled: true    
+        enabled: true      
     }
 }); 
 // some change
