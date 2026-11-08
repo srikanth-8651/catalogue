@@ -33,10 +33,8 @@ jobs:
       project: 'roboshop'
       component: 'catalogue'
       environment: 'sit'
-<<<<<<< HEAD
       commit_id: ${{ github.sha }}
     secrets: inherit
-=======
     secrets: inherit
  uat-workflow:
     if: github.ref_name == 'main'
@@ -58,4 +56,3 @@ jobs:
     cr_number: ${{ inputs.cr_number }}
     version: ${{ inputs.version }}
   secrets: inherit
->>>>>>> 458bf9a (Github-Actions)
