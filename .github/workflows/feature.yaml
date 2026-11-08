@@ -1,42 +1,55 @@
 name: feature pipeline
+
 on:
- push:
- workflow_dispatch: 
-  # branches_ignore: #we ignore main branch by this ignore case
-  #  - 'main'
+  push:
+  workflow_dispatch:
+    inputs:
+      cr_number:
+        description: 'Approved Change Request number'
+        required: true
+        type: string
+      version:
+        description: 'Production release version (example v1.0.0)'
+        required: true
+        type: string
+
 jobs:
- feature-workflow:
+  feature-workflow:
     if: github.ref_name != 'main'
     uses: srikanth-8651/workflows/.github/workflows/nodejs-eks-feature.yaml@main
     with:
-      project: 'roboshop'     
+      project: 'roboshop'
       component: 'catalogue'
     permissions:
-     statuses: write
-     contents: write
-     pull-requests: write
+      statuses: write
+      contents: write
+      pull-requests: write
     secrets: inherit
-   #main flow starts here DEV environment
- dev-workflow:
+
+  dev-workflow:
     if: github.ref_name == 'main'
-    uses: srikanth-8651/workflows/.github/workflows/nodejs-eks-main.yaml@main  #calls the reusable workflow.
-    with: #passing inputs 
-      project: 'roboshop' 
-      component: 'catalogue'  
+    uses: srikanth-8651/workflows/.github/workflows/nodejs-eks-main.yaml@main
+    with:
+      project: 'roboshop'
+      component: 'catalogue'
       environment: 'dev'
+      commit_id: ${{ github.sha }}
     secrets: inherit
-    #Sit environment
- sit-workflow:
+
+  sit-workflow:
     if: github.ref_name == 'main'
+    needs: dev-workflow
     uses: srikanth-8651/workflows/.github/workflows/nodejs-eks-main.yaml@main
     with:
       project: 'roboshop'
       component: 'catalogue'
       environment: 'sit'
       commit_id: ${{ github.sha }}
-    secrets: inherit 
- uat-workflow:
+    secrets: inherit
+
+  uat-workflow:
     if: github.ref_name == 'main'
+    needs: sit-workflow
     uses: srikanth-8651/workflows/.github/workflows/nodejs-eks-main.yaml@main
     with:
       project: 'roboshop'
@@ -44,15 +57,16 @@ jobs:
       environment: 'uat'
       commit_id: ${{ github.sha }}
     secrets: inherit
- prod-workflow:
-  if: github.ref_name == 'main'
-  needs: uat-workflow
-  uses: srikanth-8651/workflows/.github/workflows/nodejs-eks-main.yaml@main
-  with:
-    project: roboshop
-    component: catalogue
-    environment: prod
-    commit_id: ${{ github.sha }}
-    cr_number: ${{ inputs.cr_number }}
-    version: ${{ inputs.version }}
-  secrets: inherit
+
+  prod-workflow:
+    if: github.ref_name == 'main' && inputs.cr_number != '' && inputs.version != ''
+    needs: uat-workflow
+    uses: srikanth-8651/workflows/.github/workflows/nodejs-eks-main.yaml@main
+    with:
+      project: 'roboshop'
+      component: 'catalogue'
+      environment: 'prod'
+      commit_id: ${{ github.sha }}
+      cr_number: ${{ inputs.cr_number }}
+      version: ${{ inputs.version }}
+    secrets: inherit
