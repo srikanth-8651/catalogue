@@ -18,8 +18,21 @@ jobs:
     secrets: inherit
    
  main-workflow: 
-  runs-on: ubuntu-latest
-  steps:
-   - name: main workflow
-     run: echo "this runs when a commits from main branch"
-   
+  dev-workflow:
+    if: github.ref_name == 'main'
+    uses: srikanth-8651/workflows/.github/workflows/nodejs-eks-main.yaml@main  #calls the reusable workflow.
+    with: #passing inputs 
+      project: 'roboshop' 
+      component: 'catalogue'  
+      environment: 'dev'
+    secrets: inherit
+    
+  sit-workflow:
+    needs: dev-workflow
+    if: github.ref_name == 'main'
+    uses: srikanth-8651/workflows/.github/workflows/nodejs-eks-main.yaml@main
+    with:
+      project: 'roboshop'
+      component: 'catalogue'
+      environment: 'sit'
+    secrets: inherit
