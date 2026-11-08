@@ -33,4 +33,5 @@ jobs:
       project: 'roboshop'
       component: 'catalogue'
       environment: 'sit'
+      commit_id: ${{ github.sha }}
     secrets: inherit
