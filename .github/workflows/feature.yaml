@@ -42,6 +42,7 @@ jobs:
       project: 'roboshop'
       component: 'catalogue'
       environment: 'uat'
+      commit_id: ${{ github.sha }}
     secrets: inherit
  prod-workflow:
   if: github.ref_name == 'main'
