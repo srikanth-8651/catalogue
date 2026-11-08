@@ -16,9 +16,8 @@ jobs:
      contents: write
      pull-requests: write
     secrets: inherit
-   
- main-workflow: 
-  dev-workflow:
+   #main flow starts here DEV environment
+dev-workflow:
     if: github.ref_name == 'main'
     uses: srikanth-8651/workflows/.github/workflows/nodejs-eks-main.yaml@main  #calls the reusable workflow.
     with: #passing inputs 
@@ -26,8 +25,8 @@ jobs:
       component: 'catalogue'  
       environment: 'dev'
     secrets: inherit
-    
-  sit-workflow:
+    #Sit environment
+sit-workflow:
     if: github.ref_name == 'main'
     uses: srikanth-8651/workflows/.github/workflows/nodejs-eks-main.yaml@main
     with:
