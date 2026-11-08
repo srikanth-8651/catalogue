@@ -28,7 +28,6 @@ jobs:
     secrets: inherit
     
   sit-workflow:
-    needs: dev-workflow
     if: github.ref_name == 'main'
     uses: srikanth-8651/workflows/.github/workflows/nodejs-eks-main.yaml@main
     with:
