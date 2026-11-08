@@ -34,8 +34,7 @@ jobs:
       component: 'catalogue'
       environment: 'sit'
       commit_id: ${{ github.sha }}
-    secrets: inherit
-    secrets: inherit
+    secrets: inherit 
  uat-workflow:
     if: github.ref_name == 'main'
     uses: srikanth-8651/workflows/.github/workflows/nodejs-eks-main.yaml@main
