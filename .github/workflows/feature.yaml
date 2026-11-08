@@ -33,5 +33,29 @@ jobs:
       project: 'roboshop'
       component: 'catalogue'
       environment: 'sit'
+<<<<<<< HEAD
       commit_id: ${{ github.sha }}
     secrets: inherit
+=======
+    secrets: inherit
+ uat-workflow:
+    if: github.ref_name == 'main'
+    uses: srikanth-8651/workflows/.github/workflows/nodejs-eks-main.yaml@main
+    with:
+      project: 'roboshop'
+      component: 'catalogue'
+      environment: 'uat'
+    secrets: inherit
+ prod-workflow:
+  if: github.ref_name == 'main'
+  needs: uat-workflow
+  uses: srikanth-8651/workflows/.github/workflows/nodejs-eks-main.yaml@main
+  with:
+    project: roboshop
+    component: catalogue
+    environment: prod
+    commit_id: ${{ github.sha }}
+    cr_number: ${{ inputs.cr_number }}
+    version: ${{ inputs.version }}
+  secrets: inherit
+>>>>>>> 458bf9a (Github-Actions)
